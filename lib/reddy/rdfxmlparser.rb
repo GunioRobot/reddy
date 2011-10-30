@@ -4,7 +4,7 @@ include Reddy
 
 module Reddy
   include LibXML
-  
+
   class RdfXmlParser
 
     attr_accessor :xml, :graph
@@ -34,19 +34,19 @@ module Reddy
         }
       end
     end
-  
+
     private
     def is_rdf_root? (node)
       #TODO: clean this method up to make it more like Ruby and less like retarded Java
       if node.name == "RDF"
-        if !node.namespaces.nil? && node.namespaces.namespace.href == @@syntax_base 
+        if !node.namespaces.nil? && node.namespaces.namespace.href == @@syntax_base
           return true
         end
       else
         return false
       end
     end
-    
+
     def parse_descriptions(el, subject=nil)
       # subject
       subject = parse_subject(el) if subject.nil?
@@ -69,7 +69,7 @@ module Reddy
         @graph.add_triple(subject, @@rdf_type, url_helper(el.name, el.namespaces.namespace.href, el.base_uri))
       end
 
-      # read each attribute that's not in @@syntax_base 
+      # read each attribute that's not in @@syntax_base
       el.attributes.each { |att|
         @graph.add_triple(subject, url_helper(att.name, att.ns.href, el.base_uri), att.value) unless att.ns.href == @@syntax_base
       }
@@ -120,7 +120,7 @@ module Reddy
             parse_descriptions(cel)
           end
         }
-        
+
         # reification
         if child.attributes.get_attribute_ns(@@syntax_base, "ID")
           if id_check?(child.attributes.get_attribute_ns(@@syntax_base, "ID").value)
@@ -133,11 +133,11 @@ module Reddy
             raise
           end
         end
-        
+
       }
-      
+
     end
-    
+
     private
     def fail_check(el)
       if el.attributes.get_attribute_ns(@@syntax_base, "aboutEach")
@@ -150,10 +150,10 @@ module Reddy
         raise "Bad BagID" unless el.attributes.get_attribute_ns(@@syntax_base, "bagID").value =~ /^[a-zA-Z_][a-zA-Z0-9]*$/
       end
     end
-    
+
     def parse_subject(el)
       fail_check(el)
-      
+
       if el.attributes.get_attribute_ns(@@syntax_base, "about")
         #debugger if el.attributes.get_attribute_ns(@@syntax_base, "about").value =~ /artist$/
         return URIRef.new(base_helper(el.attributes.get_attribute_ns(@@syntax_base, "about").value, el.base_uri).to_s)
@@ -181,11 +181,11 @@ module Reddy
             raise
           end
         end
-        
+
         if uri == @@syntax_base + "#resource" || uri == @@syntax_base + "#about" #specified resource
           subject = URIRef.new(base_helper(value, el.base_uri))
         end
-        
+
         if uri.to_s == @@syntax_base + "#nodeID" #BNode with ID
           # we have a BNode with an identifier. First, we need to do syntax checking.
           if value =~ /^[a-zA-Z_][a-zA-Z0-9]*$/
@@ -194,10 +194,10 @@ module Reddy
           end
         end
       end
-      
+
       return subject
     end
-    
+
     def forge_bnode_from_string(value)
       if @graph.has_bnode_identifier?(value)
         # if so, pull it in - no need to recreate objects.
@@ -206,20 +206,20 @@ module Reddy
         # if not, create a new one.
         subject = BNode.new(value)
       end
-      
+
       return subject
     end
-    
+
     def id_check?(id)
       !(!(id =~ /^[a-zA-Z_]\w*$/))
     end
 
     protected
-    
+
     def smells_like_xml?(str)
       !(!(str =~ /xmlns/))
     end
-    
+
     def base_helper(uri, base = nil)
       uri = Addressable::URI.parse(uri)
       if uri.relative?
@@ -229,10 +229,10 @@ module Reddy
           uri = Addressable::URI.parse(@uri) + uri
         end
       end
-      #debugger if @uri.to_s =~ /bbc\.co\.uk/      
+      #debugger if @uri.to_s =~ /bbc\.co\.uk/
       return uri.to_s
     end
-    
+
     def url_helper(name, ns, base = nil)
       if ns != "" and !ns.nil?
         if ns.to_s.split("")[-1] == "#"
@@ -246,9 +246,9 @@ module Reddy
       if a.relative?
         a = base_helper(a.to_s, base)
       end
-      
+
       return URIRef.new(a.to_s)
     end
-    
+
   end
 end

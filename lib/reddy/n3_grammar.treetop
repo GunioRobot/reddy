@@ -2,22 +2,22 @@ grammar N3Grammer
 	rule document
 		statements
 	end
-	
+
 	rule statements
 		(space / (statement / directive) space* ('.' space*)? )*
 	end
-	
+
 	rule statement
 		subject space+ property_list
 	end
-	
+
 	rule subject
 		node
 	end
-	
+
 	rule verb
-		">-" prop "->"      # has xxx of 
-		/ "<-" prop "<-"    # is xxx of 
+		">-" prop "->"      # has xxx of
+		/ "<-" prop "<-"    # is xxx of
 		# / # / operator     # has operator:xxx of??? NOT IMPLMENTED
 		/ prop              # has xxx of -- shorthand
 		# / "has" prop        # has xxx of
@@ -25,15 +25,15 @@ grammar N3Grammer
 		/ "a"               # has rdf:type of
 		# / "="               # has daml:equivaent of
 	end
-	
+
 	rule prop
 		node
 	end
-	
+
 	rule node
 		uri_ref2 / anonnode / 'this'
 	end
-	
+
 	rule anonnode
 		"[" space* property_list space* "]"  # something which ...
 		/ "{" statementlist "}"  # the statementlist itself as a resource
@@ -41,7 +41,7 @@ grammar N3Grammer
 			def anonnode; true; end
 		}
 	end
-	
+
 	rule property_list
 		verb space+ object_list space* ";" space+ property_list
 		/ verb space+ object_list
@@ -59,23 +59,23 @@ grammar N3Grammer
 			def directive; true; end
 		}
 	end
-	
+
 	rule uri_ref2
 		qname / "<" uri:URI_Reference ">"
 	end
-	
+
 	rule qname
 		nprefix ":" localname / ':' localname
 	end
-	
+
 	rule object
 		subject / literal
 	end
-	
+
 	rule literal
   	(string1 / string2) ("^^<" uri:URI_Reference ">" / "@" language )?
 	end
-	
+
 	rule language
 		[a-z]+ ( "-" [a-z0-9]+ )*
 	end
@@ -83,11 +83,11 @@ grammar N3Grammer
 	rule localname
 		fragid
 	end
-	
+
 	rule URI_Reference
 		[^{}<>]*
 	end
-	
+
 	rule nprefix
 		((alpha / "_") alphanumeric*)
 	end
@@ -99,15 +99,15 @@ grammar N3Grammer
 	rule alpha
 		[a-zA-Z]
 	end
-	
+
 	rule alphanumeric
 		alpha / [0-9] / "_"
 	end
-	
+
 	rule space
 		[ \t\n\r]+ / comment
 	end
-	
+
 	rule comment
 	  '#' (![\n\r] .)*
 	end
@@ -121,13 +121,13 @@ grammar N3Grammer
 		!["] .
 	end
 
-  # """ constant value with escaping including single or double occurences of quotes and/or newlines """	
+  # """ constant value with escaping including single or double occurences of quotes and/or newlines """
 	rule string2
 		'"""' string2_char* '"""'
 	end
 
 	rule string2_char
-		!'"""' . # something like this; need to think about it some more	
+		!'"""' . # something like this; need to think about it some more
 	end
-		
+
 end

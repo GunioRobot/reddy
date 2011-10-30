@@ -18,7 +18,7 @@ module Reddy
         raise "Javascript pseudo-URIs are not acceptable"
       end
     end
-    
+
     def + (input)
       if input.class == String
         input_uri = Addressable::URI.parse(input)
@@ -27,7 +27,7 @@ module Reddy
       end
       return URIRef.new((@uri + input_uri).to_s)
     end
-    
+
     def short_name
       if @uri.fragment()
         return @uri.fragment()
@@ -37,19 +37,19 @@ module Reddy
         return false
       end
     end
-  
+
     def == (other)
       return true if @uri == other.uri
     end
-  
+
     def to_s
       @uri.to_s
     end
-  
+
     def to_ntriples
       "<" + @uri.to_s + ">"
     end
-  
+
     def test_string (string)
       string.to_s.each_byte do |b|
         if b >= 0 and b <= 31

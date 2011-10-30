@@ -20,11 +20,11 @@ module Reddy
           new string_or_nil
         end
       end
-      
+
       def inspect
         to_s()
       end
-      
+
       class Null
         def to_s
           ''
@@ -112,7 +112,7 @@ module Reddy
       def format_as_trix(contents)
         "<plainLiteral xml:lang=\"#{@value}\">#{contents}</plainLiteral>"
       end
-      
+
       def == (other)
         case other
         when String
@@ -169,7 +169,7 @@ module Reddy
         when :swedish; Language.new("sv")
         end
       end
-      
+
       def self.build_from_language(object)
         new(object.to_s, infer_language_for(object))
       end
@@ -199,11 +199,11 @@ module Reddy
     def xmlliteral?
       encoding.xmlliteral?
     end
-    
+
     def to_s
       @contents.to_s
     end
-    
+
     def lang
       encoding.is_a?(Language) ? encoding : nil
     end

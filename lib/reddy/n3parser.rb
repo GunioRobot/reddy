@@ -6,7 +6,7 @@ module Reddy
   class N3Parser
     attr_accessor :graph
 
-    ## 
+    ##
     # Creates a new parser for N3 (or Turtle).
     #
     # @param [String] n3_str the Notation3/Turtle string
@@ -47,7 +47,7 @@ module Reddy
       subjects.each do |s|
         subject = process_node(s.subject)
         properties = process_properties(s.property_list)
-        properties.each do |p|      
+        properties.each do |p|
           predicate = process_verb(p.verb)
           objects = process_objects(p.object_list)
           objects.each { |object| triple(subject, predicate, object) }
@@ -62,7 +62,7 @@ module Reddy
     def process_anonnode(anonnode)
       bnode = BNode.new
       properties = process_properties(anonnode.property_list)
-      properties.each do |p|      
+      properties.each do |p|
         predicate = process_node(p.verb)
         objects = process_objects(p.object_list)
         objects.each { |object| triple(bnode, predicate, object) }
@@ -78,7 +78,7 @@ module Reddy
     def process_node(node)
       if (node.respond_to? :uri)
         URIRef.new(node.uri.text_value)
-      else      
+      else
         prefix = (node.respond_to? :nprefix) ? node.nprefix.text_value : nil
         localname = node.localname.text_value
         build_uri(prefix, localname)
@@ -112,11 +112,11 @@ module Reddy
         process_literal(object)
       end
     end
-    
+
     def process_literal(object)
       encoding, language = nil, nil
       string, type = object.elements
-      
+
       unless type.elements.nil?
         if (type.elements[0].text_value=='@')
           language = type.elements[1].text_value
@@ -129,9 +129,9 @@ module Reddy
         Literal.untyped(string.elements[1].text_value, language)
       else
         Literal.typed(string.elements[1].text_value, encoding)
-      end      
+      end
     end
-    
+
     def build_uri(prefix, localname)
       prefix = '__local__' if prefix.nil?
       if (prefix=='_')

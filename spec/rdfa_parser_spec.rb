@@ -21,7 +21,7 @@ describe "RDFa parser" do
     </body>
     </html>
     EOF
-    
+
     parser = RdfaParser.new(sampledoc, uri = "http://www.w3.org/2006/07/SWD/RDFa/testsuite/xhtml1-testcases/0001.xhtml")
     parser.graph.size.should == 1
   end

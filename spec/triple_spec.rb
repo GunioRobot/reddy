@@ -48,11 +48,11 @@ describe "Triples" do
     it "should accept a uri string and make URIRef" do
       Triple.coerce_subject('http://localhost/').should == URIRef.new('http://localhost/')
     end
-    
+
     it "should accept an Addressable::URI object and make URIRef" do
       Triple.coerce_subject(Addressable::URI.parse("http://localhost/")).should == URIRef.new("http://localhost/")
     end
-    
+
     it "should turn an other string into a BNode" do
       Triple.coerce_subject('foo').should == BNode.new('foo')
     end
@@ -86,23 +86,23 @@ describe "Triples" do
       ref = URIRef.new("http://localhost/")
       Triple.coerce_object(ref).should == ref
     end
-    
+
     it "should accept an Addressable::URI object and make URIRef" do
       Triple.coerce_object(Addressable::URI.parse("http://localhost/")).should == URIRef.new("http://localhost/")
     end
-    
+
     it "should leave BNodes alone" do
       ref = BNode.new()
       Triple.coerce_object(ref).should == ref
     end
-    
+
     it "should leave Literals alone" do
       ref = Literal.untyped('foo')
       Triple.coerce_object(ref).should == ref
-      
+
       typedref = Literal.build_from('foo')
       Triple.coerce_object(ref).should == ref
     end
-    
+
   end
 end

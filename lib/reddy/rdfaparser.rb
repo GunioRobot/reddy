@@ -1,4 +1,4 @@
-module Reddy 
+module Reddy
   class Reddy::RdfaParser
     attr_accessor :xml, :uri, :graph
 
@@ -40,7 +40,7 @@ module Reddy
       else
         subject = @uri
       end
-  
+
       if el.attributes['property']
         if el.attributes['property'] =~ /^http/
           property = el.attributes['property']
@@ -49,7 +49,7 @@ module Reddy
         property = self.parse_ns_curie(el, "property")
         end
       end
-  
+
       if el.attributes['content']
         value = el.attributes['content']
       else

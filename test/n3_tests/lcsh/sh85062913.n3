@@ -38,4 +38,4 @@
          lcsh_7:concept;
      skos:prefLabel "Humanities"@en;
      skos:related lcsh_20:concept;
-     skos:scopeNote "Here are entered works on the branches of learning regarded as having a cultural character, including literature, the arts, history, philosophy, religion, etc."@en. 
+     skos:scopeNote "Here are entered works on the branches of learning regarded as having a cultural character, including literature, the arts, history, philosophy, religion, etc."@en.

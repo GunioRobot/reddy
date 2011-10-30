@@ -14,9 +14,9 @@ describe "REXML" do
       </rdf:Description>
     </rdf:RDF>
     EOF
-    
+
     @doc = REXML::Document.new(string)
-    
+
     string2 = <<-EOF;
 <?xml version="1.0" ?>
     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ex="http://example.org/">
@@ -29,24 +29,24 @@ describe "REXML" do
     EOF
     @doc2 = REXML::Document.new(string2)
   end
-  
+
   it "should have support for xml:base" do
     @doc.root.elements[1].base?.should == true
     @doc.root.elements[1].base.should == "http://example.org/"
     @doc2.root.elements[1].base?.should_not == true
     @doc2.root.elements[1].base.should == nil
   end
-  
+
   it "should have support for xml:lang" do
     @doc.root.elements[1].lang?.should == true
     @doc.root.elements[1].lang.should == "en"
     @doc2.root.elements[1].lang?.should_not == true
     @doc2.root.elements[1].lang.should == nil
   end
-  
+
   it "should allow individual writing-out of XML" do
 #    puts @doc.root.elements[1].write
-    
+
     sampledoc = <<-EOF;
     <?xml version="1.0"?>
 
@@ -61,7 +61,7 @@ describe "REXML" do
       <http://www.w3.org/Consortium/Legal/copyright-software.html>
 
       Description: Visibly used namespaces must be included in XML
-             Literal values. Treatment of namespaces that are not 
+             Literal values. Treatment of namespaces that are not
              visibly used (e.g. rdf: in this example) is implementation
              dependent. Based on example from Issues List.
 
@@ -87,11 +87,11 @@ describe "REXML" do
     expectedoutput_str = "<html:h1 xmlns:html=\'http://NoHTML.example.org\' xmlns:my=\'http://my.example.org/\' xmlns:rdf=\'http://www.w3.org/1999/02/22-rdf-syntax-ns#\'>\n            <b xmlns=\'http://www.w3.org/1999/xhtml\'>John</b>\n          </html:h1>"
     expectedout = REXML::Document.new(expectedoutput_str)
     doc2.root.elements[1].elements[1].elements[1].write_reddy == expectedout.root
-    
+
     sampledoc3 = <<-EOF;
 <?xml version="1.0"?><RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><Description><x:li xmlns:x="http://example.org/notRDF" /></Description></RDF>
     EOF
-    
+
     doc3 = REXML::Document.new(sampledoc3)
     out3 = REXML::Document.new(doc3.root.elements[1].write_reddy)
     out3.root.class == REXML::Element

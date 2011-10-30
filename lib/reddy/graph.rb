@@ -8,7 +8,7 @@ module Reddy
       @triples = []
       @nsbinding = {}
     end
-    
+
     def self.load (uri)
       RdfXmlParser.new(open(uri)).graph
     end
@@ -20,7 +20,7 @@ module Reddy
     def each
       @triples.each { |value| yield value }
     end
-    
+
     def [] (item)
       @triples[item]
     end
@@ -35,7 +35,7 @@ module Reddy
       @triples.find_all { |i| true if i.subject == subject}
     end
 
-    ## 
+    ##
     # Adds a triple to a graph directly from the intended subject, predicate, and object.
     #
     # ==== Example
@@ -55,7 +55,7 @@ module Reddy
       @triples += [ Triple.new(s, p, o) ]
     end
 
-    ## 
+    ##
     # Adds an extant triple to a graph
     #
     # ==== Example
@@ -74,7 +74,7 @@ module Reddy
       @triples += [ triple ]
     end
 
-    ## 
+    ##
     # Exports the graph to RDF in N-Triples form.
     #
     # ==== Example
@@ -91,7 +91,7 @@ module Reddy
       end * "\n" + "\n"
     end
 
-    ## 
+    ##
     # Creates a new namespace given a URI and the short name and binds it to the graph.
     #
     # ==== Example
@@ -147,7 +147,7 @@ module Reddy
       end
       return false
     end
-    
+
     def get_by_type(object)
       out = []
       each do |t|
@@ -164,10 +164,10 @@ module Reddy
       end
       return out
     end
-    
+
     def join(graph)
       if graph.class == Graph
-        graph.each { |t| 
+        graph.each { |t|
           self << t
         }
       else

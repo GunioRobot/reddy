@@ -2,5 +2,5 @@
 
 @prefix : <http://example.org/#> .
 
-:Subject :predicateOne :ObjectA, :ObjectB; 
+:Subject :predicateOne :ObjectA, :ObjectB;
          :predicateTwo :ObjectC, :ObjectD .

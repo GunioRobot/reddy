@@ -1,8 +1,8 @@
 module Reddy
   class Namespace
     attr_accessor :short, :uri, :fragment
- 
-    ## 
+
+    ##
     # Creates a new namespace given a URI and the short name.
     #
     # ==== Example
@@ -28,7 +28,7 @@ module Reddy
       end
     end
 
-    ## 
+    ##
     # Allows the construction of arbitrary URIs on the namespace.
     #
     # ==== Example

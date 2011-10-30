@@ -10,21 +10,21 @@ require 'rexml/document'
 
 class REXML::Element
   public
-  
-  ## 
+
+  ##
   # Tells you whether or not an element has a set xml:lang.
   #
   # @author Tom Morris
   def lang?
     self.lang.nil? ? false : true
   end
-  
-  ## 
+
+  ##
   # Tells you what the set xml:lang is for an element.
   #
   # ==== Returns
   # @return [String] The URI of the xml:lang.
-  # 
+  #
   # @author Tom Morris
   def lang
     if self.attributes['xml:lang']
@@ -36,10 +36,10 @@ class REXML::Element
     end
   end
 
-  ## 
+  ##
   # Tells you whether or not an element has a set xml:base.
   #
-  # @author Tom Morris  
+  # @author Tom Morris
   def base?
     if self.base != nil
       true
@@ -47,13 +47,13 @@ class REXML::Element
       false
     end
   end
-  
-  ## 
+
+  ##
   # Tells you what the set xml:lang is for an element.
   #
   # ==== Returns
   # @return [String] The URI of the xml:base.
-  # 
+  #
   # @author Tom Morris
   def base
     if self.attributes['xml:base']
@@ -64,13 +64,13 @@ class REXML::Element
       return nil
     end
   end
-  
-  ## 
+
+  ##
   # Allows you to write out an XML representation of a particular element and it's children, fixing namespace issues.
   #
   # ==== Returns
   # @return [String] The XML of the element and it's children.
-  # 
+  #
   # @author Tom Morris
   def write_reddy(excl=[])
     # TODO: add optional list argument of excluded namespaces
@@ -80,10 +80,10 @@ class REXML::Element
     self.support_write_recursive(self.namespaces, self)
     return self.to_s
   end
-  
+
   protected
   def support_write_recursive(array, el)
-    el.each_element { |e| 
+    el.each_element { |e|
       unless array.has_key?(e.prefix) && array.has_value?(e.namespace)
         if e.prefix != ""
           e.add_attribute('xmlns:' + e.prefix, e.namespace)

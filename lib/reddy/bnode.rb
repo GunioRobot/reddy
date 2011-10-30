@@ -16,7 +16,7 @@ module Reddy
 
     alias_method :==, :eql?
 
-    ## 
+    ##
     # Exports the BNode in N-Triples form.
     #
     # ==== Example
@@ -32,7 +32,7 @@ module Reddy
     end
 
 
-    ## 
+    ##
     # Exports the BNode in N-Triples form.
     #
     # ==== Example
@@ -49,14 +49,14 @@ module Reddy
 
     ##
     # Returns the identifier as a string.
-    # 
+    #
     # === Returns
     # @return [String] Blank node identifier.
     #
     # @author Tom Morris
     def to_s
       @identifier
-    end  
+    end
 
     protected
     def valid_id? name
